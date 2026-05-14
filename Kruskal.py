@@ -9,14 +9,19 @@ class Grafo:
         self.conexoes.append((a, b, peso))
 
     def nomearNo(self, no, nome):
-        if no > 0 and no < self.tamanho:
+        # CORREÇÃO: condição era "no > 0", excluindo o índice 0 (primeiro nó).
+        # Alterado para "no >= 0".
+        if no >= 0 and no < self.tamanho:
             self.nos[no] = nome
 
     def NomearNos(self, nos, nomes):
         quantidade = len(nos)
-        if quantidade < 0 and quantidade != nomes and quantidade < self.tamanho:
-            for i in range(0, quantidade):
-                self.nos[i] = nomes[i]
+        # CORREÇÃO: condição era "quantidade < 0" (nunca verdadeira) e
+        # "quantidade != nomes" (comparava int com lista).
+        # Alterado para verificar corretamente se há nomes suficientes.
+        if quantidade > 0 and quantidade == len(nomes) and quantidade <= self.tamanho:
+            for i in range(quantidade):
+                self.nos[nos[i]] = nomes[i]
 
     def PrintarGrafo(self):
         print(self.nos)
@@ -26,7 +31,9 @@ class Grafo:
         if pai[i] == i:
             return i
         else:
-            return self.ProcurarNo(pai, pai[i])
+            # MELHORIA: compressão de caminho para maior eficiência
+            pai[i] = self.ProcurarNo(pai, pai[i])
+            return pai[i]
 
     def UnirNosArvore(self, pai, altura, x, y):
         raizx = self.ProcurarNo(pai, x)

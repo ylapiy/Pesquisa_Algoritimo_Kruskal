@@ -23,7 +23,7 @@ a.ConectarNos(3, 5, 7)
 a.ConectarNos(4, 6, 6)
 a.ConectarNos(5, 6, 11)
 
-a.PrintarGrafo
+a.PrintarGrafo()
 
 b = a.Kruskal()
 print(b)
